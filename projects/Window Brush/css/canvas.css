@@ -1,0 +1,11 @@
+canvas {
+    display: block;
+}
+
+.control {
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+}

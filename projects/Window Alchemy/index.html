@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Window Alchemy</title>
+<link rel="stylesheet" href="../../common.css">
+
+<script defer src="../../js/projects.js"></script>
+<style>
+#world{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    background:#444;
+}
+
+.object{
+    position:absolute;
+    width:60px;
+    height:60px;
+    border-radius:10px;
+}
+</style>
+
+<script defer>
+
+const boundary = {
+    left:0,
+    top:0,
+    right:0,
+    bottom:0
+};
+
+const gravity = 0.5;
+
+const objects = [
+    {
+        id:"water",
+        color:"#3498db",
+        x:100,
+        y:30,
+        width:60,
+        height:60,
+        vx:0,
+        vy:0
+    },
+    {
+        id:"fire",
+        color:"#e74c3c",
+        x:250,
+        y:80,
+        width:60,
+        height:60,
+        vx:0,
+        vy:0
+    },
+    {
+        id:"earth",
+        color:"#27ae60",
+        x:400,
+        y:130,
+        width:60,
+        height:60,
+        vx:0,
+        vy:0
+    },
+    {
+        id:"air",
+        color:"#95a5a6",
+        x:550,
+        y:20,
+        width:60,
+        height:60,
+        vx:0,
+        vy:0
+    }
+];
+
+let world;
+
+function updateBoundary(){
+    boundary.left = 0;
+    boundary.top = 0;
+    boundary.right = window.innerWidth;
+    boundary.bottom = window.innerHeight;
+}
+
+function createObjects(){
+
+    for(const obj of objects){
+
+        const div = document.createElement("div");
+
+        div.className = "object";
+        div.id = obj.id;
+        div.style.background = obj.color;
+
+        world.appendChild(div);
+
+        obj.element = div;
+    }
+}
+
+function physics(){
+
+    for(const obj of objects){
+
+        obj.vy += gravity;
+
+        obj.x += obj.vx;
+        obj.y += obj.vy;
+
+        if(obj.x < boundary.left){
+            obj.x = boundary.left;
+            obj.vx = 0;
+        }
+
+        if(obj.x + obj.width > boundary.right){
+            obj.x = boundary.right - obj.width;
+            obj.vx = 0;
+        }
+
+        if(obj.y < boundary.top){
+            obj.y = boundary.top;
+            obj.vy = 0;
+        }
+
+        if(obj.y + obj.height > boundary.bottom){
+            obj.y = boundary.bottom - obj.height;
+            obj.vy = 0;
+        }
+    }
+}
+
+function render(){
+
+    for(const obj of objects){
+
+        obj.element.style.left = obj.x + "px";
+        obj.element.style.top = obj.y + "px";
+    }
+}
+
+function loop(){
+
+    physics();
+    render();
+
+    requestAnimationFrame(loop);
+}
+
+window.addEventListener("resize", updateBoundary);
+
+window.addEventListener("DOMContentLoaded", ()=>{
+
+    world = document.getElementById("world");
+
+    updateBoundary();
+
+    createObjects();
+
+    loop();
+});
+
+</script>
+
+</head>
+
+<body>
+
+<button class="random-btn" onclick="navigateToRandomProject()">⚡ Random</button>
+<a href="../../index.html" class="home-btn">← Home</a>
+
+<div id="world"></div>
+
+</body>
+</html>

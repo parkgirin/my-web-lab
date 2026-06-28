@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Window Spray Brush</title>
+<link rel="stylesheet" href="../../common.css">
+<link rel="stylesheet" href="css/canvas.css">
+
+<script defer src="../../js/projects.js"></script>
+<script defer src="js/utils.js"></script>
+<script defer src="js/camera.js"></script>
+<script defer src="js/particles-render.js"></script>
+<script defer src="js/particles-main.js"></script>
+</head>
+
+<body>
+
+<button class="random-btn" onclick="navigateToRandomProject()">⚡ Random</button>
+<a href="../../index.html" class="home-btn">← Home</a>
+
+<div id="ui">
+    <button id="reset">Reset</button>
+    <button id="save">Save PNG</button>
+
+    <hr>
+
+    <div class="control">
+        <label>Base Color</label>
+        <input type="color" id="colorPicker" value="#ffffff">
+    </div>
+
+    <div class="control">
+        <label>Spray Power</label>
+        <input type="range" id="sprayPower" min="0" max="2" step="0.01" value="1">
+    </div>
+
+</div>
+
+<canvas id="c"></canvas>
+
+</body>
+</html>
