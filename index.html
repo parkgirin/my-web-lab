@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Web Lab</title>
+
 <link rel="stylesheet" href="common.css">
-<script defer src="js/projects.js"></script>
+
+<script src="js/projects.js"></script>
 </head>
 
 <body>
@@ -18,42 +20,22 @@
 <div id="grid"></div>
 
 <script>
-const projects = [
-    {
-        name: "Window Brush — Shake Color",
-        desc: "창 움직임으로 색상을 바꾸며 그리는 캔버스",
-        path: "./projects/Window%20Brush/canvas.html",
-        tag: "brush / canvas"
-    },
-    {
-        name: "Window Brush — Spray",
-        desc: "창 위치 기반 스프레이 브러시 시뮬레이션",
-        path: "./projects/Window%20Brush/particles.html",
-        tag: "spray / particles"
-    },
-    {
-        name: "Window Alchemy",
-        desc: "네 가지 요소의 상호작용 시뮬레이션",
-        path: "./projects/Window%20Alchemy/index.html",
-        tag: "alchemy / physics"
-    }
-];
-
 const grid = document.getElementById("grid");
 
-projects.forEach(p => {
+(window.allProjects || []).forEach(project => {
+
     const card = document.createElement("div");
     card.className = "card";
 
     card.innerHTML = `
-        <h2>${p.name}</h2>
-        <p>${p.desc}</p>
-        <div class="tag">${p.tag}</div>
+        <h2>${project.name}</h2>
+        <p>${project.desc}</p>
+        <div class="tag">${project.tag}</div>
     `;
 
-    card.onclick = () => {
-        window.location.href = p.path;
-    };
+    card.addEventListener("click", () => {
+        window.location.href = getProjectPath(project.folder);
+    });
 
     grid.appendChild(card);
 });
